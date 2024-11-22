@@ -3,10 +3,7 @@ package org.ecommerce.emarket.Controller;
 
 import org.ecommerce.emarket.Model.Product;
 import org.ecommerce.emarket.Service.ProductService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/Products")
@@ -26,6 +23,12 @@ public class ProductController {
         return productService.getProduct(id) ;
 
     }
+
+    @PostMapping()
+    public Product addProduct(@RequestBody Product product){
+         return productService.createProduct(product);
+    }
+
 
 
 }

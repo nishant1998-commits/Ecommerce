@@ -6,4 +6,8 @@ public interface ProductService {
 
     public Product getProduct(int id);
 
+    public Product createProduct(Product product);
+
+    public Product updateProduct(Product product);
+
 }
