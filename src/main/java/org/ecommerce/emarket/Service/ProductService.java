@@ -8,6 +8,6 @@ public interface ProductService {
 
     public Product createProduct(Product product);
 
-    public Product updateProduct(Product product);
+    public Product updateProduct(int id,Product product);
 
 }

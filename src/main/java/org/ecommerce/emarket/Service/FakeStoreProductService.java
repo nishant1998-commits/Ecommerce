@@ -3,7 +3,10 @@ package org.ecommerce.emarket.Service;
 
 import org.ecommerce.emarket.FakeStoreDto;
 import org.ecommerce.emarket.Model.Product;
+import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpMessageConverterExtractor;
+import org.springframework.web.client.RequestCallback;
 import org.springframework.web.client.RestTemplate;
 import org.ecommerce.emarket.Model.Category;
 
@@ -23,6 +26,25 @@ public class FakeStoreProductService implements ProductService{
         return convertFakeStoreDtotoProduct(fakeStoreDto);
 
 
+    }
+
+    public Product updateProduct(int id, Product product){
+
+        FakeStoreDto fakeStoreDto= new FakeStoreDto();
+        //fakeStoreDto.setId(product.getId());
+        fakeStoreDto.setTitle(product.getName());
+        fakeStoreDto.setPrice(product.getPrice());
+        fakeStoreDto.setDescription(product.getDescription());
+        fakeStoreDto.setCategory(product.getCategory().getCategory_name());
+        //fakeStoreDto.setImage(product.getImageUrl());
+
+
+        RequestCallback requestCallback = restTemplate.httpEntityCallback(fakeStoreDto, FakeStoreDto.class);
+        HttpMessageConverterExtractor<FakeStoreDto> responseExtractor = new HttpMessageConverterExtractor(FakeStoreDto.class, restTemplate.getMessageConverters());
+        FakeStoreDto fakeStore= restTemplate.execute("https://fakestoreapi.com/products/"+id, HttpMethod.PUT, requestCallback, responseExtractor);
+
+
+        return convertFakeStoreDtotoProduct(fakeStore);
     }
 
     public Product createProduct(Product product){
@@ -63,5 +85,8 @@ public class FakeStoreProductService implements ProductService{
 
 
     }
+
+
+
 
 }
