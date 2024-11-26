@@ -28,6 +28,27 @@ public class FakeStoreProductService implements ProductService{
 
     }
 
+    public Product patchProduct(int id,Product product){
+
+        FakeStoreDto fakeStoreDto= new FakeStoreDto();
+        //fakeStoreDto.setId(product.getId());
+        fakeStoreDto.setTitle(product.getName());
+        fakeStoreDto.setPrice(product.getPrice());
+        fakeStoreDto.setDescription(product.getDescription());
+        fakeStoreDto.setCategory(product.getCategory().getCategory_name());
+        fakeStoreDto.setImage(product.getImageUrl());
+
+        RequestCallback requestCallback = restTemplate.httpEntityCallback(fakeStoreDto, FakeStoreDto.class);
+        HttpMessageConverterExtractor<FakeStoreDto> responseExtractor = new HttpMessageConverterExtractor(FakeStoreDto.class, restTemplate.getMessageConverters());
+        FakeStoreDto fakeStore= restTemplate.execute("https://fakestoreapi.com/products/"+id, HttpMethod.PUT, requestCallback, responseExtractor);
+
+
+        return convertFakeStoreDtotoProduct(fakeStore);
+
+
+
+    }
+
     public Product updateProduct(int id, Product product){
 
         FakeStoreDto fakeStoreDto= new FakeStoreDto();
@@ -36,7 +57,7 @@ public class FakeStoreProductService implements ProductService{
         fakeStoreDto.setPrice(product.getPrice());
         fakeStoreDto.setDescription(product.getDescription());
         fakeStoreDto.setCategory(product.getCategory().getCategory_name());
-        //fakeStoreDto.setImage(product.getImageUrl());
+        fakeStoreDto.setImage(product.getImageUrl());
 
 
         RequestCallback requestCallback = restTemplate.httpEntityCallback(fakeStoreDto, FakeStoreDto.class);
@@ -82,6 +103,14 @@ public class FakeStoreProductService implements ProductService{
         return product;
 
 
+
+
+    }
+
+    public void deleteProduct(int id){
+
+
+        restTemplate.delete("https://fakestoreapi.com/products/"+id);
 
 
     }
