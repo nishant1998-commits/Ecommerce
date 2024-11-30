@@ -1,12 +1,16 @@
 package org.ecommerce.emarket.Model;
 
+import jakarta.persistence.Entity;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class Category {
 
-    int category_id;
+@Entity
+public class Category extends BaseModel {
+
+
     String category_name;
+    String description;
 }
