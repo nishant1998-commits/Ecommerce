@@ -10,7 +10,7 @@ import org.springframework.web.client.RequestCallback;
 import org.springframework.web.client.RestTemplate;
 import org.ecommerce.emarket.Model.Category;
 
-@Service
+@Service("fakeProductService")
 public class FakeStoreProductService implements ProductService{
 
     RestTemplate restTemplate;
